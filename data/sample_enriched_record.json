@@ -1,0 +1,11 @@
+{
+  "state": "texas",
+  "practice_area": "landlord_tenant",
+  "section_id": "sample_section_001",
+  "summary": "Plain-English summary of the legal section generated for search and user understanding.",
+  "intent_tags": ["tenant_rights", "lease_compliance", "notice_requirements"],
+  "complexity_level": "medium",
+  "search_keywords": ["tenant", "landlord", "notice", "lease"],
+  "validation_status": "passed",
+  "note": "This is a sanitized example. No production enrichment output is included."
+}

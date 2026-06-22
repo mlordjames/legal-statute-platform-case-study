@@ -1,0 +1,39 @@
+erDiagram
+    STATE ||--o{ PRACTICE_AREA : "covers"
+    PRACTICE_AREA ||--o{ CHAPTER : "groups"
+    CHAPTER ||--o{ STATUTE_SECTION : "contains"
+    STATUTE_SECTION ||--|| ENRICHMENT : "enriched_by"
+    STATE ||--o{ CASE_LAW_RECORD : "jurisdiction_of"
+
+    STATE {
+        string state_code
+        string state_name
+    }
+    PRACTICE_AREA {
+        string practice_area_id
+        string name
+    }
+    CHAPTER {
+        string chapter_id
+        string title
+    }
+    STATUTE_SECTION {
+        string section_id
+        string title
+        string extraction_status
+        string source_url
+    }
+    ENRICHMENT {
+        string section_id
+        string summary
+        string intent_tags
+        string complexity_level
+        string validation_status
+    }
+    CASE_LAW_RECORD {
+        string case_id
+        string case_name
+        string court
+        string decision_date
+        string storage_format
+    }

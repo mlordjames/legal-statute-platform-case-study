@@ -1,0 +1,43 @@
+# Secrets / environment
+.env
+*.env
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
+
+# Private / production data (never commit)
+raw_data/
+production_data/
+client_data/
+outputs/
+exports/
+secrets/
+credentials/
+
+# Internal agent scratch space
+_agent_work/
+
+# External QA review notes (not part of the public deliverable)
+*review.md
+gpt review.md
+claude review.md
+
+# Internal coworker/agent briefs (not part of the public deliverable)
+COWORKER_PDF_BRIEF.md
+*_BRIEF.md
+
+# Data formats that may carry real data
+*.parquet
+*.csv
+*.xlsx
+*.db
+*.sqlite
+*.zip

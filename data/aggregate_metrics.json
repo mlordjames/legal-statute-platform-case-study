@@ -1,0 +1,8 @@
+{
+  "states_covered": 4,
+  "practice_areas": 12,
+  "statute_sections_processed": 53000,
+  "case_law_records_processed": 530000,
+  "architecture_target": "scalable_to_50_states",
+  "confidentiality": "production data excluded"
+}

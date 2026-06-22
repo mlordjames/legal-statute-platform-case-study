@@ -1,0 +1,27 @@
+flowchart TD
+    START["Goal: extract ~530k state court cases<br/>from CourtListener at scale"]
+
+    START --> A1["Attempt 1: REST API<br/>server-side filtered pagination"]
+    A1 -->|"125 requests/day cap<br/>= months of crawling"| A2["Attempt 2: bulk CSV download<br/>3-pass Python streaming on 8GB EC2"]
+
+    A2 -->|"54GB single bzip2 stream<br/>not splittable · 1.5GB in-RAM join<br/>silent crash wrote 625 of 530,034 rows"| A3["Pivot: S3 + Parquet + Athena<br/>(managed join owns the hard parts)"]
+
+    A3 --> B1["Convert bzip2 to Parquet:<br/>Attempt — DuckDB"]
+    B1 -->|"can't read non-seekable named pipe<br/>OOM on COPY-to-S3 · lseek failures"| B2["Fix: pyarrow open_csv on a file object<br/>streaming · ~200MB peak"]
+
+    A3 --> C1["First convert kept plain_text only"]
+    C1 -->|"69% of opinions are HTML-only<br/>= ~32% case coverage"| C2["Fix: coalesce plain_text + HTML/XML<br/>into one cleaned raw_text<br/>99.98% non-empty over 10.7M opinions"]
+
+    A3 --> D1["Opinions Parquet ~40-50GB<br/>overflowed root EBS"]
+    D1 -->|"disk full mid-run"| D2["Fix: per-file stream-upload to staging<br/>+ delete local · ~512MB disk peak"]
+
+    B2 --> DONE["Final: reliable, serverless,<br/>~$0.05 / Athena run · scale-flat to 50 states"]
+    C2 --> DONE
+    D2 --> DONE
+
+    classDef fail fill:#e76f51,stroke:#b5482f,color:#fff;
+    classDef fix fill:#2a9d8f,stroke:#1d6f63,color:#fff;
+    classDef goal fill:#1f3a5f,stroke:#0d1b2a,color:#fff;
+    class A1,A2,B1,C1,D1 fail;
+    class A3,B2,C2,D2 fix;
+    class START,DONE goal;

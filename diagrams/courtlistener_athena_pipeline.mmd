@@ -1,0 +1,38 @@
+flowchart LR
+    subgraph ext["CourtListener (public bulk data)"]
+        CL["3 bzip2 CSV files<br/>dockets 5GB · clusters 2.3GB · opinions 54GB<br/>(~350GB decompressed)"]
+    end
+
+    subgraph lake["Data Lake (S3)"]
+        RAW["raw/<br/>bzip2 archives"]
+        PARQ["parquet/<br/>dockets · clusters · opinions<br/>columnar · splittable"]
+        ARES["athena-results/<br/>case-level join output"]
+        OUT["results/<br/>per-case JSON<br/>case · review · excluded · unmatched"]
+    end
+
+    subgraph managed["AWS Managed (serverless)"]
+        GLUE["Glue Data Catalog<br/>3 tables"]
+        ATH["Athena<br/>3-way SQL join<br/>~$0.05 / run"]
+    end
+
+    subgraph compute["Ephemeral EC2 (short-lived)"]
+        CONV["Phase 1: pyarrow streaming<br/>bzip2 to Parquet<br/>~200MB peak · ONE-TIME"]
+        SCORE["Phase 3: PA keyword scorer<br/>Parquet to JSON · thin script"]
+    end
+
+    CL -->|"one-time S3 copy"| RAW
+    RAW --> CONV
+    CONV -->|"convert once"| PARQ
+    PARQ -.->|"registered as"| GLUE
+    GLUE --> ATH
+    ATH -->|"seconds to minutes"| ARES
+    ARES --> SCORE
+    SCORE --> OUT
+    OUT --> ENR["LLM enrichment<br/>(planned: Batch API)"]
+
+    classDef lake fill:#264653,stroke:#1b3a4b,color:#fff;
+    classDef mgmt fill:#2a9d8f,stroke:#1d6f63,color:#fff;
+    classDef comp fill:#1f3a5f,stroke:#0d1b2a,color:#fff;
+    class RAW,PARQ,ARES,OUT lake;
+    class GLUE,ATH mgmt;
+    class CONV,SCORE comp;

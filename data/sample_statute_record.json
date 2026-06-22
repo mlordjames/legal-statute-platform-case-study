@@ -1,0 +1,12 @@
+{
+  "state": "texas",
+  "practice_area": "landlord_tenant",
+  "source_type": "public_statute",
+  "chapter": "Property Code Chapter 92",
+  "section_id": "sample_section_001",
+  "title": "Sample Residential Tenancy Section",
+  "raw_text_preview": "Sanitized sample text only. Full production text is not included.",
+  "source_url": "https://example.com/public-statute-source",
+  "extraction_status": "validated",
+  "last_updated": "2026-06-22"
+}

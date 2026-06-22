@@ -1,0 +1,13 @@
+flowchart TD
+    A[Validated Statute Record] --> B[LLM Enrichment]
+    B --> C[Summary]
+    B --> D[Intent Tags]
+    B --> E[Metadata]
+    C --> F[QA Validation]
+    D --> F
+    E --> F
+    F -->|passed| G[Enriched Output]
+    F -->|failed| B
+
+    classDef step fill:#2a9d8f,stroke:#1d6f63,color:#ffffff;
+    class A,B,C,D,E,F,G step;

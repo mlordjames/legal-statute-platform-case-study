@@ -1,0 +1,9 @@
+flowchart LR
+    R[Raw Zone\nS3] --> C[Clean Zone\nS3]
+    C --> E[Enriched Zone\nS3]
+    E --> P[Parquet\nColumnar]
+    P --> A[Athena\nSQL Queries]
+    A --> D[Reports / Dashboard]
+
+    classDef zone fill:#264653,stroke:#1b3a4b,color:#ffffff;
+    class R,C,E,P,A,D zone;

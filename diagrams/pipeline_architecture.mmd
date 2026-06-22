@@ -1,0 +1,11 @@
+flowchart LR
+    A[Public Legal Sources] --> B[Extractors]
+    B --> C[Normalizer]
+    C --> D[Validator]
+    D --> E[Storage]
+    E --> F[AI Enrichment]
+    F --> G[Analytics]
+    G --> H[Reports]
+
+    classDef stage fill:#1f3a5f,stroke:#0d1b2a,color:#ffffff;
+    class A,B,C,D,E,F,G,H stage;

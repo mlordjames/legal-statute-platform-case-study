@@ -1,0 +1,11 @@
+{
+  "source": "CourtListener bulk data",
+  "jurisdiction": "sample_state",
+  "case_id": "sample_case_001",
+  "case_name": "Sample Plaintiff v. Sample Defendant",
+  "decision_date": "2024-01-01",
+  "court": "Sample Court",
+  "text_preview": "Sanitized case law preview only.",
+  "storage_format": "parquet",
+  "analytics_layer": "athena-compatible"
+}
